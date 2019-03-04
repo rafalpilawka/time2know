@@ -13,7 +13,7 @@ const Time =({time})=>{
     } else {
      return t
     }}
-      return  (<div className="center"><h1>{check(min)}:{check(se)}</h1> </div>)
+      return  (<div className="center flow-text"><h1>{check(min)}:{check(se)}</h1> </div>)
 }
 
 
@@ -28,7 +28,9 @@ class  Counter extends Component {
      pauseTime: 0,
      interval: undefined,
      audio: new Audio(alertSound),
-     totalSeconds: 0
+     totalSeconds: 1500,
+     buttonList: ['start','stop','pause'],
+     stock: 0
   }
  
 
@@ -44,42 +46,9 @@ toggleTimeHandler=( number)=>{
 start=()=>{
     this.setState({totalSeconds: this.state.time*60})
     this.counting()
-    // let totalSeconds = this.state.time*60;
-    // this.setState({flag: true})
-    // this.setState({pause:false})
-    // //this.myInterval(totalSeconds)
-    
-   
 
-    // const interval = setInterval(() => {
-    //         this.setState({seconds: totalSeconds});
-    //         // console.log(this.state.seconds)
-    //         totalSeconds --
-            
-                
-    //             if (this.state.pause){
-                       
-    //                 this.setState({pauseTime: totalSeconds},console.log('Time remain' , this.state.pauseTime))                   
-    //                 clearInterval(interval)
-                    
-    //             }
-    //             if(totalSeconds === -1 || !this.state.flag){
-    //                     clearInterval(interval);
-    //                     console.log('finished')
-    //                     this.resetTime();
-    //                     let audio = new Audio(alertSound);
-    //                     audio.play()
-                        
-    //                 }   
-                
-    // }, 1000);
-    
-   }
-// sound=()=>{
-//     console.log('playSound')
-//    const audio = new Audio(./)
-//    audio.play()
-// }
+}
+
 toggleButtons=(button)=>{
     switch(button){
         case 'start':
@@ -95,23 +64,15 @@ toggleButtons=(button)=>{
             return console.log('Pause')
         
         default: return console.log('default')
-
     }
-    
-
 }
-
-
 
 counting =()=> {
     this.setState({
-        // totalSeconds: this.state.time*60,
     interval: setInterval(this.counter, 1000)
     })
-    //const int = setInterval(()=>this.counter(),1000);
-    //clearInterval(int)}
+  
 }
-
 
 counter=()=>{
     let i= this.state.totalSeconds
@@ -122,11 +83,12 @@ counter=()=>{
         if (i===0){
             let audio= new Audio(alertSound)
             audio.play()
+            if(this.state.time===25){
+                this.setState({stock: this.state.stock+1 })
+                this.state.stock===4 ||this.state.stock===8?this.setState({time:10}): this.setState({time:5})
+            }           
             clearInterval(this.interval)
         }
-   
-    // if (!this.state.flag){
-    //     clearInterval(this.state.int)}
     }
 
 
@@ -146,17 +108,15 @@ pause=()=>{
         });
         this.counting();
   
-}   if(!this.state.pause){
-            clearInterval(this.state.interval)
+        }  
+    if(!this.state.pause){
+        clearInterval(this.state.interval)
 
-            this.setState({pauseTime:this.state.totalSeconds}, console.log(this.state.pause))
-            this.setState({pause: true})
-
+        this.setState({pauseTime:this.state.totalSeconds}, console.log(this.state.pause))
+        this.setState({pause: true})
     }
-
 }
        
-
 stateCheck=()=>{
     console.log(this.state, this.interval)
 }
@@ -167,18 +127,17 @@ resetTime=()=>{
 }
 
 
-
-
-
 render (){
     return (
     <div>
       
       <Controls clicked={this.toggleTimeHandler}/>
       <div className="container center">
-      <Buttons clicked={this.toggleButtons}></Buttons>
+      <Buttons clicked={this.toggleButtons} buttonList={this.state.buttonList} ></Buttons>
       <Time time={this.state.totalSeconds}></Time>
+      <h5 className="warning red-text">{this.state.pause?"PAUSE":null}</h5>
       <button className=" btn blue lighten-2 center" onClick={this.stateCheck}>State </button>
+      <div className="blue-text">TOTAL ROUNDS:{this.state.stock}</div>
       </div>
      
       

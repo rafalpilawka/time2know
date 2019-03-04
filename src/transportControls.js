@@ -1,14 +1,22 @@
 import React from 'react'
 
-function transportControls(props) {
+const transportControls=({clicked, buttonList})=> {
+
+ 
+const  commandList = buttonList.map(bttn=>{
+             return (<button className="btn" key={bttn} onClick={()=>clicked(bttn)}>{bttn}</button>)
+       })
+         
+
+     
   return (
-    <div>
-      <button className="btn" onClick={()=>props.clicked('start')}>Start count</button>
-      <button className="btn red" onClick={()=>props.clicked('stop')}>Stop count</button>
-      <button className="btn red" onClick={()=>props.clicked('pause')}>Pause count</button>
-      <button className="btn red" onClick={()=>props.clicked('start')}>Check internal interval</button>
-    </div>
+<div>
+    {commandList}
+</div>
+    
   )
+     
+  
 }
 
 export default transportControls
