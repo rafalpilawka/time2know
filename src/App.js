@@ -44,7 +44,7 @@ toggleTimeHandler=( number)=>{
 
 
 start=()=>{
-    this.setState({totalSeconds: this.state.time*60})
+    this.setState({totalSeconds: this.state.time*60 , flag: false})
     this.counting()
 
 }
@@ -94,7 +94,7 @@ counter=()=>{
 
 stop=()=>{  
 
-    this.setState({flag: false});
+    this.setState({flag: true, pause: false});
     clearInterval(this.state.interval)
     this.state.audio.play()
 
@@ -133,9 +133,9 @@ render (){
       
       <Controls clicked={this.toggleTimeHandler}/>
       <div className="container center">
-      <Buttons clicked={this.toggleButtons} buttonList={this.state.buttonList} ></Buttons>
+      <Buttons clicked={this.toggleButtons} buttonList={this.state.buttonList} flag={this.state.flag} ></Buttons>
       <Time time={this.state.totalSeconds}></Time>
-      <h5 className="warning red-text">{this.state.pause?"PAUSE":null}</h5>
+      <h5 className="warning red-text">{!this.state.flag&& this.state.pause ? "PAUSE":null}</h5>
       <button className=" btn blue lighten-2 center" onClick={this.stateCheck}>State </button>
       <div className="blue-text">TOTAL ROUNDS:{this.state.stock}</div>
       </div>
