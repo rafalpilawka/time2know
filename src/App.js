@@ -44,7 +44,9 @@ toggleTimeHandler=( number)=>{
 
 
 start=()=>{
-    this.setState({totalSeconds: this.state.time*60 , flag: false})
+    clearInterval(this.state.interval)
+    let time = this.state.time
+    this.setState({totalSeconds: time*60 , flag: false})
     this.counting()
 
 }
