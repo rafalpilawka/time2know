@@ -19,6 +19,11 @@
   color: white;
 }
 
+.Padded {
+  padding: 15px !important;
+
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -34,4 +39,6 @@
     transform: rotate(360deg);
   }
 }
+
+
 
